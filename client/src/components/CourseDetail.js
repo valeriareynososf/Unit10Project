@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Nav from './Nav';
 {/*
 CourseDetail - This component provides the "Course Detail" screen by retrieving the detail for a course from the REST API's /api/courses/:id route and rendering the course. 
@@ -9,9 +9,23 @@ This component also renders an "Update Course" button for navigating to the "Upd
 const CourseDetail = () => {
 
     return (
-        <div className="header">
-            <Link to="/" className="header--logo"><h1>Courses</h1></Link>
-            <Nav />
+        <div>
+            <div className="actions--bar">
+                <div className="wrap">
+                    <NavLink className="button" to="/">Update Course</NavLink>
+                    <NavLink className="button" to="/">Delete Course</NavLink>
+                    <NavLink className="button button-secondary" to="/">Return to List</NavLink>
+                </div>
+            </div>
+            <div className="wrap">
+                <h2>Course Detail</h2>
+                <form>
+                    <div className="main--flex">
+
+                    </div>
+                </form>
+
+            </div>
         </div>
     )
 }
