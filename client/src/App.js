@@ -1,45 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from "react-router-dom";
-
-import './App.css';
+import Courses from '../src/components/Courses'
+import Header from './components/Header';
+import  '../src/styles/global.css'
+//import  '../src/styles/reset.css'
 
 function App() {
-  const [images, setImages] = useState();
-
-  useEffect(() => {
-    let activeFetch = true;
-  
-    fetch("http://localhost:5000/api/courses")
-    .then(res => {
-      if (res.ok) {
-        console.log(res)
-         return res.json() 
-      } else {
-          console.log(res)
-          console.log("Not successful!")
-      }
-     
-  })
-    .then(res => {
-      if (activeFetch) {
-        console.log(res)
-            // setImages(res.photos.photo);
-  
-          }
-    })
-    .catch(error => console.log("Error fetching data", error))
-    return () => {
-      activeFetch = false;
-    };
-  
-    }, [images])
-
-
+ 
   return (
-    <div>
+    <div id="root">
+      <Header />
      <Routes>
-      <Route path="/" element={<h1>HELLO</h1>}  />
-
+      <Route path="/" element={<Courses />}  />
+      {/* <Route path="/courses/create" element={<CreateCourse />} />
+      <Route path="courses">
+          <Route index element={null} />
+          <Route path=":id" element={<CourseDetail />} />
+          <Route path=":id/update" element={<UpdateCourse />} />
+        </Route>
+      <Route path="/signin" element={<UserSignIn />}  />
+      <Route path="/signup" element={<UserSignUp />}  />
+      <Route path="/signout" element={<UserSignOut />}  /> */}
      </Routes>
     </div>
   );
