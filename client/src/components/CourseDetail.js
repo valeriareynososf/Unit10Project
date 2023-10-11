@@ -10,11 +10,12 @@ const CourseDetail = () => {
     const { id } = useParams()
     const navigate = useNavigate();
     const { authUser } = useContext(UserContext)
+    const { password } = authUser;
     const [course, setCourse] = useState({})
 
     const handleDelete = async () => {
         console.log("delete this");
-        const data = await api(`/courses/${id}`, "DELETE", null);
+        const data = await api(`/courses/${id}`, "DELETE", null,  {...authUser, password: password});
         if (data.status === 204) {
             navigate("/")
         } else if (data.status === 403) {
@@ -25,16 +26,14 @@ const CourseDetail = () => {
     }
 
     useEffect(() => {
-        let activeFetch = true;
-
         const getCourses = async () => {
             const data = await api(`/courses/${id}`, "GET", null);
             if (data.status === 200) {
                 const course = await data.json()
                 console.log("course:", course)
-                if (activeFetch) {
-                    setCourse(course);
-                }
+
+                setCourse(course);
+
             } else if (data.status === 404) {
                 navigate("/notfound")
             } else {
@@ -45,11 +44,6 @@ const CourseDetail = () => {
 
         getCourses()
             .catch(console.error);
-
-
-        return () => {
-            activeFetch = false;
-        };
 
     }, [])
 

@@ -24,7 +24,7 @@ const UserSignIn = () => {
         }
 
         const credentials = {
-            email: email.current.value,
+            emailAddress: email.current.value,
             password: password.current.value
         };
 

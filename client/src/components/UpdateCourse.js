@@ -37,7 +37,6 @@ const UpdateCourse = () => {
 
 
     useEffect(() => {
-        let activeFetch = true;
 
         const getCourses = async () => {
             const data = await api(`/courses/${id}`, "GET", null);
@@ -46,10 +45,10 @@ const UpdateCourse = () => {
                 console.log("course:", course)
                 if (authUser?.id !== course?.User?.id) {
                     navigate("/forbidden")
-                } else if (activeFetch) {
+                } else {
                     setCourse(course);
                 }
-                
+
             } else if (data.status === 404) {
                 navigate("/notfound")
             } else {
@@ -60,11 +59,7 @@ const UpdateCourse = () => {
 
         getCourses()
             .catch(console.error);
-
-        return () => {
-            activeFetch = false;
-        };
-
+            
     }, [id, navigate])
 
     return (

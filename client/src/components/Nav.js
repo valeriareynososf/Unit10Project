@@ -4,24 +4,30 @@ import UserContext from "../context/UserContext";
 
 const Nav = () => {
     const { authUser } = useContext(UserContext)
-
+    console.log(authUser)
     return (
         <nav>
-            {authUser === null ?
-                <ul className="header--signedout">
-                    <li>
-                        <Link className="signup" to="/signup">Sign up</Link>
-                    </li>
-                    <li>
-                        <Link className="signin" to="/signin">Sign in</Link>
-                    </li>
-                </ul>
-                :
-                <>
-                    <span>Welcome, {authUser.name}!</span>
-                    <Link className="signout" to="/signout">Sign out</Link>
-                </>
-            }
+            <ul className="header--signedout">
+                {authUser === null ?
+                    <>
+                        <li>
+                            <Link className="signup" to="/signup">Sign up</Link>
+                        </li>
+                        <li>
+                            <Link className="signin" to="/signin">Sign in</Link>
+                        </li>
+                    </>
+                    :
+                    <>
+                        <li>
+                            <span>Welcome, {authUser.firstName} {authUser.lastName} !</span>
+                        </li>
+                        <li>
+                            <Link className="signout" to="/signout">Sign out</Link>
+                        </li>
+                    </>
+                }
+            </ul>
         </nav>
     )
 }

@@ -14,6 +14,7 @@ export const UserProvider = (props) => {
     if (res.status === 200) {
       const user = await res.json()
       console.log("User:", user)
+      user.password = credentials.password
       setAuthUser(user);
       //persists user credentials
       Cookies.set("authenticatedUser", JSON.stringify(user), { expires: 1 });
@@ -25,7 +26,7 @@ export const UserProvider = (props) => {
     }
   }
 
-  const signOut = async () => {
+  const signOut = () => {
     setAuthUser(null);
     Cookies.remove("authenticatedUser");
   }

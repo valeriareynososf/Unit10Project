@@ -8,29 +8,21 @@ const Courses = () => {
     const [courses, setCourses] = useState([])
 
     useEffect(() => {
-        let activeFetch = true;
-
         const getCourses = async () => {
             const data = await api("/courses", "GET", null);
             if (data.status === 200) {
                 const courses = await data.json()
                 console.log("courses:", courses)
-                if (activeFetch) {
-                    setCourses(courses);
-                }
+                setCourses(courses);
             } else if (data.status === 500) {
                 navigate("/error")
             } else {
                 throw new Error()
             }
         }
-
         getCourses()
             .catch(console.error);
 
-        return () => {
-            activeFetch = false;
-        };
 
     }, [])
 
