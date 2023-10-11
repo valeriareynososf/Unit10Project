@@ -17,7 +17,6 @@ const UpdateCourse = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(e.target)
         const data = await api(`/courses/${id}`, "PUT", course, authUser);
         if (data.status === 204) {
             navigate(`/courses/${id}`)
@@ -41,7 +40,6 @@ const UpdateCourse = () => {
             const data = await api(`/courses/${id}`, "GET", null);
             if (data.status === 200) {
                 const course = await data.json()
-                console.log("course:", course)
 
                 //navigate to forbidden if authenticated user's ID doesn't match that of the user who owns the course
 

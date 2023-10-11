@@ -13,7 +13,7 @@ export const UserProvider = (props) => {
 
     if (res.status === 200) {
       const user = await res.json()
-      console.log("User:", user)
+      // console.log("User:", user)
       user.password = credentials.password
       setAuthUser(user);
       //persists user credentials

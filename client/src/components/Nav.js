@@ -4,7 +4,7 @@ import UserContext from "../context/UserContext";
 
 const Nav = () => {
     const { authUser } = useContext(UserContext)
-    console.log(authUser)
+    // console.log(authUser)
     return (
         <nav>
             <ul className="header--signedout">
