@@ -10,10 +10,10 @@ const CourseDetail = () => {
     const { id } = useParams()
     const navigate = useNavigate();
     const { authUser } = useContext(UserContext)
-    const { password } = authUser;
     const [course, setCourse] = useState({})
 
     const handleDelete = async () => {
+         const { password } = authUser;
         const data = await api(`/courses/${id}`, "DELETE", null, { ...authUser, password: password });
         if (data.status === 204) {
             navigate("/")

@@ -34,11 +34,11 @@ function App() {
         <Route path="signin" element={<UserSignIn />} />
         <Route path="signup" element={<UserSignUp />} />
         <Route path="signout" element={<UserSignOut />} />
-  
-        <Route path="error" element={< UnhandledError />} />
+
+        <Route path="error" element={<UnhandledError />} />
         <Route path="forbidden" element={<Forbidden />} />
-        <Route path="notfound" element={< NotFound />} />
-        <Route path="*" element={< Navigate replace to="notfound" />} />
+        <Route path="notfound" element={<NotFound />} />
+        <Route path="*" element={<Navigate replace to="notfound" />} />
       </Routes>
     </>
   );

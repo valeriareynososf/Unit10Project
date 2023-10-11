@@ -29,9 +29,10 @@ const UserSignUp = () => {
             if (response.status === 201) {
                 console.log(`${user.firstName} ${user.lastName} is successfully signed up and authenticated!`)
                 const credentials = {
-                    email: user.emailAddress,
+                    emailAddress: user.emailAddress,
                     password: user.password
                 }
+        
                 await actions.signIn(credentials);
                 navigate("/")
             } else if (response.status === 400) {

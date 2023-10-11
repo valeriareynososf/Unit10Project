@@ -35,7 +35,7 @@ const UserSignIn = () => {
                 setErrors(["Sign-in was unsuccessful"])
             }
         } catch (e) {
-            console.log(e);
+            // console.log(e);
             navigate("/error")
         }
     }
