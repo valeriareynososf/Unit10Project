@@ -30,6 +30,7 @@ const UserSignIn = () => {
 
         try {
             const user = await actions.signIn(credentials);
+            console.log("user",user)
             if (user) {
                 navigate(from)
             } else {

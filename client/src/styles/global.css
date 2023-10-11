@@ -23,10 +23,6 @@ a {
     color: #939;
     text-decoration: none;
 }
-ul,
-ol {
-  list-style: none;
-}
 .wrap {
     max-width: 1250px;
     margin: 0 auto;

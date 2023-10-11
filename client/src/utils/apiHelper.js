@@ -15,9 +15,9 @@ export const api = (
         options.body = JSON.stringify(body);
         options.headers["Content-Type"] = "application/json; charset=utf-8";
     }
-
+console.log("creds in apicall", credentials)
     if (credentials) {
-        const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
+        const encodedCredentials = btoa(`${credentials.email}:${credentials.password}`);
         options.headers.Authorization = `Basic ${encodedCredentials}`;
     }
 

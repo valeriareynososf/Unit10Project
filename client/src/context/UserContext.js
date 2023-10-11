@@ -8,8 +8,8 @@ export const UserProvider = (props) => {
   const cookie = Cookies.get("authenticatedUser");
   const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
 
-  const signIn = async () => {
-    const res = await api("/Users", "GET", null);
+  const signIn = async (credentials) => {
+    const res = await api("/users", "GET", null, credentials);
 
     if (res.status === 200) {
       const user = await res.json()

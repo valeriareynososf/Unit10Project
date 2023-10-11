@@ -28,7 +28,11 @@ const UserSignUp = () => {
             const response = await api("/users", "POST", user);
             if (response.status === 201) {
                 console.log(`${user.firstName} ${user.lastName} is successfully signed up and authenticated!`)
-                await actions.signIn(user);
+                const credentials = {
+                    email: user.emailAddress,
+                    password: user.password
+                }
+                await actions.signIn(credentials);
                 navigate("/")
             } else if (response.status === 400) {
                 const data = await response.json();

@@ -1,5 +1,6 @@
 const Errors = ({errors}) => {
-    if (errors) {
+  console.log(errors)
+    if (errors?.length) {
          return (
         <div className="validation--errors">
             <h3>Validation Errors</h3>
