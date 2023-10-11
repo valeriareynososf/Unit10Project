@@ -23,7 +23,7 @@ const UpdateCourse = () => {
         if (data.status === 204) {
             navigate(`/courses/${id}`)
         } else if (data.status === 400) {
-            const data = await response.json();
+            const data = await data.json();
             setErrors(data.errors)
         } else if (data.status === 404) {
             navigate("/notfound")
@@ -45,7 +45,7 @@ const UpdateCourse = () => {
                 const course = await data.json()
                 console.log("course:", course)
                 if (authUser?.id !== course?.User?.id) {
-                    navigate(`/forbidden`)
+                    navigate("/forbidden")
                 } else if (activeFetch) {
                     setCourse(course);
                 }

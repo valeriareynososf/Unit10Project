@@ -1,6 +1,6 @@
-import { useEffect, useContext, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { api } from '../utils/apiHelper';
 import UserContext from '../context/UserContext';
 import Errors from './Errors';
 
@@ -15,7 +15,7 @@ const CreateCourse = () => {
         materialsNeeded: ''
     })
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(e.target)
         const data = await api(`/courses`, "POST", course, authUser);

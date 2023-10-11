@@ -16,7 +16,7 @@ const UserSignIn = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("submitted")
-        
+
         //redirects users back to the previous screen after successfully signing in
         let from = "/";
         if (location.state) {
@@ -33,7 +33,7 @@ const UserSignIn = () => {
             if (user) {
                 navigate(from)
             } else {
-                setErrors["Sign-in was unsuccessful"]
+                setErrors(["Sign-in was unsuccessful"])
             }
         } catch (e) {
             console.log(e);
