@@ -6,7 +6,7 @@ import Errors from './Errors';
 
 const CreateCourse = () => {
     const navigate = useNavigate()
-    const { authUser} = useContext(UserContext);
+    const { authUser } = useContext(UserContext);
     const { password } = authUser;
     const [errors, setErrors] = useState([]);
     const [course, setCourse] = useState({
@@ -16,17 +16,18 @@ const CreateCourse = () => {
         estimatedTime: '',
         materialsNeeded: ''
     })
-console.log(password)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await api(`/courses`, "POST", course, {...authUser, password: password});
-        console.log("data", data)
+        const data = await api(`/courses`, "POST", course, { ...authUser, password: password });
+
         if (data.status === 201) {
             navigate(`/`)
         } else if (data.status === 400) {
             const res = await data.json();
-            if (data.errors) {
-                setErrors(data.errors)
+            // console.log("res", res)
+            if (res.errors) {
+                setErrors(res.errors)
             }
         } else if (data.status === 500) {
             navigate("/error")
@@ -45,6 +46,7 @@ console.log(password)
     return (
         <div className="wrap">
             <h2>Create Course</h2>
+            {/* screens display validation errors returned from the REST API */}
             <Errors errors={errors} />
             <form onSubmit={handleSubmit}>
                 <div className="main--flex">

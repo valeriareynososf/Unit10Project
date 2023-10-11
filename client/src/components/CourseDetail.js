@@ -14,24 +14,24 @@ const CourseDetail = () => {
     const [course, setCourse] = useState({})
 
     const handleDelete = async () => {
-        console.log("delete this");
-        const data = await api(`/courses/${id}`, "DELETE", null,  {...authUser, password: password});
+        const data = await api(`/courses/${id}`, "DELETE", null, { ...authUser, password: password });
         if (data.status === 204) {
             navigate("/")
         } else if (data.status === 403) {
-            return null;
+            navigate("/forbidden")
+        } else if (data.status === 500) {
+            navigate("/error")
         } else {
-            throw new Error()
+           throw new Error()
         }
     }
 
     useEffect(() => {
         const getCourses = async () => {
             const data = await api(`/courses/${id}`, "GET", null);
+            // console.log("course:", data)
             if (data.status === 200) {
                 const course = await data.json()
-                console.log("course:", course)
-
                 setCourse(course);
 
             } else if (data.status === 404) {
@@ -45,14 +45,13 @@ const CourseDetail = () => {
         getCourses()
             .catch(console.error);
 
-    }, [])
+    }, [id, navigate])
 
-
-    console.log("course", course)
     return (
         <div>
             <div className="actions--bar">
                 <div className="wrap">
+                    {/* only show if authenticated user's ID matches that of the user who owns the course */}
                     {
                         authUser?.id === course?.User?.id ?
                             (

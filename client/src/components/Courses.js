@@ -12,9 +12,9 @@ const Courses = () => {
             const data = await api("/courses", "GET", null);
             if (data.status === 200) {
                 const courses = await data.json()
-                console.log("courses:", courses)
                 setCourses(courses);
             } else if (data.status === 500) {
+                //redirect users when API returns a 500 status code
                 navigate("/error")
             } else {
                 throw new Error()
@@ -24,7 +24,7 @@ const Courses = () => {
             .catch(console.error);
 
 
-    }, [])
+    }, [navigate])
 
     return (
 

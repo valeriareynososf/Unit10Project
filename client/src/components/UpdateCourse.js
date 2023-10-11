@@ -13,7 +13,6 @@ const UpdateCourse = () => {
 
     const [course, setCourse] = useState({})
     const [errors, setErrors] = useState([])
-    console.log("initial course", course)
 
 
     const handleSubmit = async (e) => {
@@ -23,8 +22,8 @@ const UpdateCourse = () => {
         if (data.status === 204) {
             navigate(`/courses/${id}`)
         } else if (data.status === 400) {
-            const data = await data.json();
-            setErrors(data.errors)
+            const res = await data.json();
+            setErrors(res.errors)
         } else if (data.status === 404) {
             navigate("/notfound")
         } else if (data.status === 500) {
@@ -43,28 +42,37 @@ const UpdateCourse = () => {
             if (data.status === 200) {
                 const course = await data.json()
                 console.log("course:", course)
+
+                //navigate to forbidden if authenticated user's ID doesn't match that of the user who owns the course
+
                 if (authUser?.id !== course?.User?.id) {
                     navigate("/forbidden")
                 } else {
                     setCourse(course);
                 }
-
             } else if (data.status === 404) {
                 navigate("/notfound")
-            } else {
+            } else if (data.status === 500) {
                 navigate("/error")
             }
-
         }
 
         getCourses()
             .catch(console.error);
-            
-    }, [id, navigate])
+
+    }, [id, navigate, authUser?.id])
+
+
+    const handleCancel = (event) => {
+        event.preventDefault();
+        navigate(`/courses/${course.id}`);
+    }
+
 
     return (
         <div className="wrap">
             <h2>Update Course</h2>
+            {/* screens display validation errors returned from the REST API */}
             <Errors errors={errors} />
             <form onSubmit={handleSubmit}>
                 <div className="main--flex">
@@ -111,7 +119,7 @@ const UpdateCourse = () => {
                     Update Course
                 </button>
                 <button className="button button-secondary"
-                    onClick={(e) => { e.preventDefault(); navigate(`/courses/${course.id}`) }}
+                    onClick={handleCancel}
                 >
                     Cancel
                 </button>

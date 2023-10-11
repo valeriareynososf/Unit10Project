@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { api } from '../utils/apiHelper';
 import Errors from './Errors';
 import UserContext from '../context/UserContext';
@@ -59,6 +59,7 @@ const UserSignUp = () => {
     return (
         <div className="form--centered">
             <h2>Sign Up</h2>
+             {/* screens display validation errors returned from the REST API */}
             <Errors errors={errors} />
             <form onSubmit={handleSubmit}>
                 <label htmlFor="firstName">First Name</label>

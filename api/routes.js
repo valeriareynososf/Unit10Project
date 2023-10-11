@@ -47,7 +47,13 @@ router.get('/courses/:id', asyncHandler(async (req, res) => {
         },
         attributes: { exclude: ['createdAt', 'updatedAt'] }
     });
-    res.status(200).json(course)
+    //  console.log(course)
+     if (course) {
+         res.status(200).json(course)
+     } else {
+        res.status(404).end();
+     }
+   
 }));
 
 /* POST/ route that will create a new course */

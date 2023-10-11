@@ -8,6 +8,7 @@ const Nav = () => {
     return (
         <nav>
             <ul className="header--signedout">
+                {/* If there is no users, show sign up/sign in links */}
                 {authUser === null ?
                     <>
                         <li>
