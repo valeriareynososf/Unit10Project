@@ -6,7 +6,9 @@ const Header = () => {
     return (
         <header>
             <div className="wrap header--flex">
-                <h1 className="header--logo"><NavLink to="/">Courses</NavLink></h1>
+                <h1 className="header--logo">
+                    <NavLink to="/">Courses</NavLink>
+                </h1>
                 <Nav />
             </div>
         </header>

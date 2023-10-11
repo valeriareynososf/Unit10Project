@@ -5,9 +5,10 @@ import Courses from '../src/components/Courses'
 import Header from './components/Header';
 import CreateCourse from './components/CreateCourse';
 import CourseDetail from './components/CourseDetail';
+import UpdateCourse from './components/UpdateCourse';
 
 import  '../src/styles/global.css'
-//import  '../src/styles/reset.css'
+
 
 function App() {
  
@@ -20,11 +21,11 @@ function App() {
       <Route path="courses">
           <Route index element={null} />
           <Route path=":id" element={<CourseDetail />} />
-          {/* <Route path=":id/update" element={<UpdateCourse />} /> */}
+          <Route path=":id/update" element={<UpdateCourse />} />
         </Route>
-       {/* <Route path="/signin" element={<UserSignIn />}  />
+       <Route path="/signin" element={<UserSignIn />}  />
       <Route path="/signup" element={<UserSignUp />}  />
-      <Route path="/signout" element={<UserSignOut />}  /> */}
+      <Route path="/signout" element={<UserSignOut />}  />
      </Routes>
     </div>
   );

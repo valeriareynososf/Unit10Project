@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-
+import UserContext
+ from "../context/UserContext";
 const Nav = () => {
-    //const { authUser } = useContext(UserContext)
-    const authUser = null;
+    const { authUser } = useContext(UserContext)
+
     return (
         <nav>
             {authUser === null ?

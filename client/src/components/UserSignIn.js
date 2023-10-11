@@ -1,21 +1,41 @@
 import { useContext, useRef, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-{/*
-UserSignIn - This component provides the "Sign In" screen by rendering a form that allows a user to sign in using their existing account information. 
-The component also renders a "Sign In" button that when clicked signs in the user and a "Cancel" button that returns the user to the default route (i.e. the list of courses).
 
-*/}
-
+import UserContext from '../context/UserContext';
 
 const UserSignIn = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { actions } = useContext(UserContext);
 
     const email = useRef(null);
     const password = useRef(null);
+    const [errors, setErrors] = useState([])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("submitted")
+        let from = "/";
+        if (location.state) {
+            from = location.state.from;
+        }
+
+        const credentials = {
+            email: email.current.value,
+            password: password.current.value
+        };
+
+        try {
+            const user = await actions.signIn(credentials);
+            if (user) {
+                navigate(from)
+            } else {
+                setErrors["Sign-in was unsuccessful"]
+            }
+        } catch (e) {
+            console.log(e);
+            navigate("/error")
+        }
     }
 
     const handleCancel = (event) => {
@@ -50,16 +70,3 @@ const UserSignIn = () => {
 }
 
 export default UserSignIn;
-
-{/*
-
-<form>
-     <label for="emailAddress">Email Address</label>
-     <input id="emailAddress" name="emailAddress" type="email" value="">
-     <label for="password">Password</label>
-     <input id="password" name="password" type="password" value="">
-     <button class="button" type="submit">Sign In</button><button class="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
- </form>
- <p>Don't have a user account? Click here to <a href="sign-up.html">sign up</a>!</p>
-                
-*/}

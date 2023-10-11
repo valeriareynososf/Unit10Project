@@ -1,47 +1,76 @@
-import { useEffect, useContext, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import UserContext from '../context/UserContext';
-import Errors from './Errors';
+import { useEffect, useContext, useState } from 'react';
+import { api } from "../utils/apiHelper.js";
+import UserContext from '../context/UserContext.js';
 
-const CreateCourse = () => {
+
+const UpdateCourse = () => {
+    const { id } = useParams()
     const navigate = useNavigate()
-    const { authUser } = useContext(UserContext);
-    const [errors, setErrors] = useState([]);
-    const [course, setCourse] = useState({
-        title: '',
-        description: '',
-        estimatedTime: '',
-        materialsNeeded: ''
-    })
 
-    const handleSubmit = async (event) => {
+    const { authUser } = useContext(UserContext)
+
+    const [course, setCourse] = useState({})
+    // const [course, setCourse] = useState({
+    //     title: '',
+    //     description: '',
+    //     estimatedTime: '',
+    //     materialsNeeded : ''
+    // })
+    const [loading, setLoading] = useState(false);
+    console.log("initial course", course)
+
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
         console.log(e.target)
-        const data = await api(`/courses`, "POST", course, authUser);
-        if (data.status === 201) {
-            navigate(`/`)
-        } else if (data.status === 400) {
-            const res = await data.json();
-            if (data.errors) {
-                setErrors(data.errors)
-            }
+        const data = await api(`/courses/${id}`, "PUT", course, authUser);
+        if (data.status === 204) {
+            navigate(`/courses/${id}`)
+        } else if (data.status === 401) {
+            return null;
         } else {
             throw new Error()
         }
-  
+        e.target.reset()
     }
 
 
-    const handleCancel = (event) => {
-        event.preventDefault();
-        navigate("/");
-    }
+    useEffect(() => {
+        let activeFetch = true;
+
+        setLoading(true)
+
+        const getCourses = async () => {
+            const data = await api(`/courses/${id}`, "GET", null);
+            if (data.status === 200) {
+                const course = await data.json()
+                console.log("course:", course)
+                if (activeFetch) {
+                    setCourse(course);
+                    setLoading(false);
+                }
+            } else if (data.status === 401) {
+                return null;
+            } else {
+                throw new Error()
+            }
+
+        }
+
+        getCourses()
+            .catch(console.error);
+
+        return () => {
+            activeFetch = false;
+        };
+
+    }, [id, navigate])
 
     return (
         <div className="wrap">
-            <h2>Create Course</h2>
-            <Errors errors={errors} />
+            <h2>Update Course</h2>
             <form onSubmit={handleSubmit}>
                 <div className="main--flex">
                     <div>
@@ -54,7 +83,7 @@ const CreateCourse = () => {
                             onChange={e => setCourse({ ...course, title: e.target.value })}
                         />
 
-                        <p>By Joe Smith</p>
+                        <p>By {course.User?.firstName} {course.User?.lastName}</p>
 
                         <label htmlFor="courseDescription">Course Description</label>
                         <textarea
@@ -84,11 +113,11 @@ const CreateCourse = () => {
                     </div>
                 </div>
                 <button className="button" type="submit">
-                    Create Course
+                    Update Course
                 </button>
-                <button
-                    className="button button-secondary"
-                    onClick={handleCancel}>
+                <button className="button button-secondary"
+                    onClick={(e) => { e.preventDefault(); navigate(`/courses/${course.id}`) }}
+                >
                     Cancel
                 </button>
             </form>
@@ -96,4 +125,4 @@ const CreateCourse = () => {
     )
 }
 
-export default CreateCourse;
+export default UpdateCourse;
