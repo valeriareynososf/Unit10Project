@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useContext, useState } from 'react';
 import { api } from "../utils/apiHelper.js";
 import UserContext from '../context/UserContext.js';
-
+import Errors from './Errors.js';
 
 const UpdateCourse = () => {
     const { id } = useParams()
@@ -19,6 +19,7 @@ const UpdateCourse = () => {
     //     materialsNeeded : ''
     // })
     const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState([])
     console.log("initial course", course)
 
 
@@ -29,7 +30,8 @@ const UpdateCourse = () => {
         if (data.status === 204) {
             navigate(`/courses/${id}`)
         } else if (data.status === 401) {
-            return null;
+            const data = await response.json();
+                setErrors(data.errors)
         } else {
             throw new Error()
         }
@@ -71,6 +73,7 @@ const UpdateCourse = () => {
     return (
         <div className="wrap">
             <h2>Update Course</h2>
+            <Errors errors={errors} /> 
             <form onSubmit={handleSubmit}>
                 <div className="main--flex">
                     <div>
