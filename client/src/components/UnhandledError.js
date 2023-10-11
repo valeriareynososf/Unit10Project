@@ -1,5 +1,3 @@
-  {/* component renders a message letting the user know that an unexpected error has occurred */}
-
 const UnhandledError = () => {
     <div className="wrap">
     <h2>Error</h2>
