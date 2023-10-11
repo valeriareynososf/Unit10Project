@@ -26,10 +26,12 @@ const CreateCourse = () => {
             if (data.errors) {
                 setErrors(data.errors)
             }
+        } else if (data.status === 500) {
+            navigate("/error")
         } else {
             throw new Error()
         }
-  
+
     }
 
 
@@ -54,7 +56,7 @@ const CreateCourse = () => {
                             onChange={e => setCourse({ ...course, title: e.target.value })}
                         />
 
-                        <p>By Joe Smith</p>
+                        <p>by {authUser?.firstName} {authUser?.lastName}</p>
 
                         <label htmlFor="courseDescription">Course Description</label>
                         <textarea

@@ -1,7 +1,8 @@
 import { useContext, useRef, useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 
 import UserContext from '../context/UserContext';
+import Errors from './Errors';
 
 const UserSignIn = () => {
     const navigate = useNavigate();
@@ -15,6 +16,8 @@ const UserSignIn = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("submitted")
+        
+        //redirects users back to the previous screen after successfully signing in
         let from = "/";
         if (location.state) {
             from = location.state.from;
@@ -46,6 +49,7 @@ const UserSignIn = () => {
     return (
         <div className="form--centered">
             <h2>Sign In</h2>
+            <Errors errors={errors} />
             <form onSubmit={handleSubmit}>
                 <input
                     id="emailAddress"
@@ -64,7 +68,7 @@ const UserSignIn = () => {
                 <button className='button' type="submit">Sign In</button>
                 <button className="button button-secondary" onClick={handleCancel}>Cancel</button>
             </form>
-            <p>Don't have a user account? Click here to <Link to="/signup">sign up</Link>!</p>
+            <p>Don't have a user account? Click here to <NavLink to="/signup">sign up</NavLink>!</p>
         </div>
     )
 }

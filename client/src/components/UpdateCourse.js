@@ -12,26 +12,23 @@ const UpdateCourse = () => {
     const { authUser } = useContext(UserContext)
 
     const [course, setCourse] = useState({})
-    // const [course, setCourse] = useState({
-    //     title: '',
-    //     description: '',
-    //     estimatedTime: '',
-    //     materialsNeeded : ''
-    // })
-    const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState([])
     console.log("initial course", course)
 
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(e.target)
         const data = await api(`/courses/${id}`, "PUT", course, authUser);
         if (data.status === 204) {
             navigate(`/courses/${id}`)
-        } else if (data.status === 401) {
+        } else if (data.status === 400) {
             const data = await response.json();
-                setErrors(data.errors)
+            setErrors(data.errors)
+        } else if (data.status === 404) {
+            navigate("/notfound")
+        } else if (data.status === 500) {
+            navigate("/error")
         } else {
             throw new Error()
         }
@@ -42,21 +39,21 @@ const UpdateCourse = () => {
     useEffect(() => {
         let activeFetch = true;
 
-        setLoading(true)
-
         const getCourses = async () => {
             const data = await api(`/courses/${id}`, "GET", null);
             if (data.status === 200) {
                 const course = await data.json()
                 console.log("course:", course)
-                if (activeFetch) {
+                if (authUser?.id !== course?.User?.id) {
+                    navigate(`/forbidden`)
+                } else if (activeFetch) {
                     setCourse(course);
-                    setLoading(false);
                 }
-            } else if (data.status === 401) {
-                return null;
+                
+            } else if (data.status === 404) {
+                navigate("/notfound")
             } else {
-                throw new Error()
+                navigate("/error")
             }
 
         }
@@ -73,7 +70,7 @@ const UpdateCourse = () => {
     return (
         <div className="wrap">
             <h2>Update Course</h2>
-            <Errors errors={errors} /> 
+            <Errors errors={errors} />
             <form onSubmit={handleSubmit}>
                 <div className="main--flex">
                     <div>

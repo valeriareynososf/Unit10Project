@@ -14,7 +14,7 @@ const UserSignUp = () => {
     const password = useRef(null);
     const [errors, setErrors] = useState([])
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const user = {
@@ -33,6 +33,8 @@ const UserSignUp = () => {
             } else if (response.status === 400) {
                 const data = await response.json();
                 setErrors(data.errors)
+            } else if (response.status === 500) {
+                navigate("/error")
             } else {
                 throw Error();
             }
@@ -52,56 +54,56 @@ const UserSignUp = () => {
 
     return (
         <div className="form--centered">
-        <h2>Sign Up</h2>
-        <Errors errors={errors} />     
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="firstName">First Name</label>
-            <input 
-            id="firstName" 
-            name="firstName" 
-            type="text"
-            ref={firstName}
-            placeholder='First Name'
-            />
+            <h2>Sign Up</h2>
+            <Errors errors={errors} />
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="firstName">First Name</label>
+                <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    ref={firstName}
+                    placeholder='First Name'
+                />
 
-            <label htmlFor="lastName">Last Name</label>
-            <input 
-            id="lastName" 
-            name="lastName" 
-            type="text" 
-            ref={lastName}
-            placeholder='Last Name'
-            />
+                <label htmlFor="lastName">Last Name</label>
+                <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    ref={lastName}
+                    placeholder='Last Name'
+                />
 
-            <label htmlFor="emailAddress">Email Address</label>
-            <input 
-            id="emailAddress" 
-            name="emailAddress" 
-            type="email" 
-            ref={emailAddress}
-            placeholder='Email Address'
-            />
+                <label htmlFor="emailAddress">Email Address</label>
+                <input
+                    id="emailAddress"
+                    name="emailAddress"
+                    type="email"
+                    ref={emailAddress}
+                    placeholder='Email Address'
+                />
 
-            <label htmlFor="password">Password</label>
-            <input 
-            id="password" 
-            name="password" 
-            type="password" 
-            ref={password}
-            placeholder='Password'
-            />
+                <label htmlFor="password">Password</label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    ref={password}
+                    placeholder='Password'
+                />
 
-            <button className="button" type="submit">
-            Sign Up
-            </button>
-            <button className="button button-secondary" 
-             onClick={handleCancel}
-            >
-            Cancel
-            </button>
-        </form>
-        <p>Already have a user account? Click here to <NavLink to="/signin">sign in</NavLink>!</p>
-    </div>
+                <button className="button" type="submit">
+                    Sign Up
+                </button>
+                <button className="button button-secondary"
+                    onClick={handleCancel}
+                >
+                    Cancel
+                </button>
+            </form>
+            <p>Already have a user account? Click here to <NavLink to="/signin">sign in</NavLink>!</p>
+        </div>
 
     )
 }

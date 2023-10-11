@@ -1,15 +1,18 @@
 import { useEffect, useContext, useState } from 'react';
-import { Link, NavLink, useParams, useNavigate  } from 'react-router-dom';
-import { api } from "../utils/apiHelper.js";
 import ReactMarkdown from 'react-markdown';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
+
+import UserContext from '../context/UserContext.js';
+import { api } from "../utils/apiHelper.js";
+
 
 const CourseDetail = () => {
     const { id } = useParams()
     const navigate = useNavigate();
+    const { authUser } = useContext(UserContext)
     const [course, setCourse] = useState({})
-    const [loading, setLoading] = useState(false);
 
-    const handleDelete = async() => {
+    const handleDelete = async () => {
         console.log("delete this");
         const data = await api(`/courses/${id}`, "DELETE", null);
         if (data.status === 204) {
@@ -24,28 +27,25 @@ const CourseDetail = () => {
     useEffect(() => {
         let activeFetch = true;
 
-        setLoading(true)
-
         const getCourses = async () => {
             const data = await api(`/courses/${id}`, "GET", null);
             if (data.status === 200) {
                 const course = await data.json()
                 console.log("course:", course)
                 if (activeFetch) {
-                setCourse(course);
-                setLoading(false);
+                    setCourse(course);
                 }
-            } else if (data.status === 401) {
-                return null;
+            } else if (data.status === 404) {
+                navigate("/notfound")
             } else {
-                throw new Error()
+                navigate("/error")
             }
-          
+
         }
 
         getCourses()
             .catch(console.error);
-    
+
 
         return () => {
             activeFetch = false;
@@ -54,13 +54,20 @@ const CourseDetail = () => {
     }, [])
 
 
-console.log("course", course)
+    console.log("course", course)
     return (
         <div>
             <div className="actions--bar">
                 <div className="wrap">
-                    <NavLink className="button" to={`/courses/${id}/update`}>Update Course</NavLink>
-                    <button className="button" onClick={handleDelete}>Delete Course</button>
+                    {
+                        authUser?.id === course?.User?.id ?
+                            (
+                                <>
+                                    <NavLink className="button" to={`/courses/${id}/update`}>Update Course</NavLink>
+                                    <button className="button" onClick={handleDelete}>Delete Course</button>
+                                </>
+                            ) : null
+                    }
                     <NavLink className="button button-secondary" to="/">Return to List</NavLink>
                 </div>
             </div>
