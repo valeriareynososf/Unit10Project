@@ -4,8 +4,8 @@ export const api = (
     body  = null,
     credentials = null
 ) => {
-    const url = "http://localhost:5000/api" + path;
-
+    // const url = "http://localhost:5000/api" + path;
+    const url = `https://unit10project-production.up.railway.app/api` + path;
     const options = {
         method,
         headers: {}
