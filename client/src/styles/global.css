@@ -7,6 +7,7 @@ html {
 }
 body {
     font-family: 'Work Sans', sans-serif;
+    background: #F3F2EF;
 }
 h2 {
     font-size: 1.5rem;
@@ -20,7 +21,7 @@ p {
     hyphens: auto;
 }
 a {
-    color: #939;
+    color: #1D8543;
     text-decoration: none;
 }
 .wrap {
@@ -29,7 +30,7 @@ a {
     padding: 0 1rem;
 }
 header {
-    background: #57496e;
+    background: #0D333F;
     color: #fff;
     padding: 1rem 0;
     margin-bottom: 2rem;
@@ -44,13 +45,13 @@ header {
     color: #fff;
 }
 header li {
-    font-size: .8rem;
+    font-size: .9rem;
 }
 header nav a {
-    color: #dbd;
+    color: #fff;
 }
 header nav a:hover {
-    color: #fff;
+    color: #1D8543;
 }
 
 .header--signedin li {
@@ -61,35 +62,53 @@ header nav a:hover {
     display: inline-block;
     margin-left: .5rem;
 }
+
+.header--username {
+    color: #1D8543;
+    font-weight: 600;
+}
+
 .course--module {
-    background: #7c689b;
+    background: #FFFFFF;
     border-radius: .5rem;
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     display: block;
 }
+
+.course--link:hover {
+    background: rgb(13, 51, 63);
+    .course--label { 
+        color: #FFFFFF;
+    }
+} 
+
+.course--add--module:hover {
+    padding: 2rem;
+}
+
 .course--label {
-    color: #fff;
+    color:#000000;
     font-size: .9rem;
-    font-weight: 400;
+    font-weight: 600;
     margin-bottom: .25rem;
 }
 .course--title {
-    color: #fff;
+    color: #1D8543;
     font-weight: 700;
     font-size: 1.25rem;
 }
 .course--add--module {
-    background: #ddd9e4;
-    color: #57496e;
-    font-weight: 300;
+    background: #DBEDEE;
+    color: #0D333F;
+    font-weight: 400;
     font-size: 1.25rem;
 }
 .course--add--title .add {
     width: 20px;
     height: auto;
     margin-right: 5px;
-    fill: #57496e;
+     fill: #0D333F;
 }
 .course--detail--title {
     padding-bottom: .25rem;
@@ -104,7 +123,7 @@ header nav a:hover {
     font-size: 2rem;
     margin-bottom: .5rem;
     font-weight: 700;
-    color: #47395e;
+    color: #1D8543;
 }
 .course--detail--list {
     font-weight: 300;
@@ -167,7 +186,7 @@ textarea {
     min-height: 300px;
 }
 .button {
-    background: #7c689b;
+    background: #0D333F;
     color: #fff;
     font-size: 1rem;
     padding: .75rem 1.5rem;
@@ -184,18 +203,23 @@ textarea {
     margin-bottom: 0;
 }
 .button:not(.button-secondary):hover {
-    background: #63537d;
+    color: #0D333F;
+    box-shadow: 0 0 0 2px #0D333F inset;
+    background: #fff;
     cursor: pointer;
+    border-radius: .5rem;
 }
 .button-secondary {
-    color: #7c689b;
+    color: #0D333F;
+    border-radius: .5rem;
     background: none;
-    box-shadow: 0 0 0 2px #7c689b inset;
+    box-shadow: 0 0 0 2px #0D333F inset;
     transition: box-shadow 0.2s, color 0.2s;
 }
 .button-secondary:hover {
-    color: #63537d;
-    box-shadow: 0 0 0 2px #63537d inset;
+    color: #fff;
+    background: #0D333F;
+    border-radius: .5rem;
     cursor: pointer;
 }
 input:focus, button:focus, .button:focus, textarea:focus {

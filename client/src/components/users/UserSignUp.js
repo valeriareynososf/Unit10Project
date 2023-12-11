@@ -1,8 +1,8 @@
 import { useContext, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { api } from '../utils/apiHelper';
-import Errors from './Errors';
-import UserContext from '../context/UserContext';
+import { api } from '../../utils/apiHelper';
+import Errors from '../errors/Errors';
+import UserContext from '../../context/UserContext';
 
 const UserSignUp = () => {
     const navigate = useNavigate();

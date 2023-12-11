@@ -1,8 +1,8 @@
 import { useContext, useRef, useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 
-import UserContext from '../context/UserContext';
-import Errors from './Errors';
+import UserContext from '../../context/UserContext';
+import Errors from '../errors/Errors';
 
 const UserSignIn = () => {
     const navigate = useNavigate();

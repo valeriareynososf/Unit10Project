@@ -2,17 +2,19 @@ import { useEffect, useContext, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 
-import UserContext from '../context/UserContext.js';
-import { api } from "../utils/apiHelper.js";
-
+import UserContext from '../../context/UserContext.js';
+import { api } from "../../utils/apiHelper.js";
+import DeleteCourseModal from '../modals/deleteModal/deleteCourse.js';
 
 const CourseDetail = () => {
     const { id } = useParams()
     const navigate = useNavigate();
     const { authUser } = useContext(UserContext)
     const [course, setCourse] = useState({})
+    const [openModal, setOpenModal] = useState(false)
 
     const handleDelete = async () => {
+        setOpenModal(false)
          const { password } = authUser;
         const data = await api(`/courses/${id}`, "DELETE", null, { ...authUser, password: password });
         if (data.status === 204) {
@@ -25,6 +27,10 @@ const CourseDetail = () => {
            throw new Error()
         }
     }
+
+const handleCloseModal = () => {
+    setOpenModal(false)
+}
 
     useEffect(() => {
         const getCourses = async () => {
@@ -46,7 +52,7 @@ const CourseDetail = () => {
             .catch(console.error);
 
     }, [id, navigate])
-
+console.log("openModal", openModal)
     return (
         <div>
             <div className="actions--bar">
@@ -57,7 +63,7 @@ const CourseDetail = () => {
                             (
                                 <>
                                     <NavLink className="button" to={`/courses/${id}/update`}>Update Course</NavLink>
-                                    <button className="button" onClick={handleDelete}>Delete Course</button>
+                                    <button className="button" onClick={() => setOpenModal(true)}>Delete Course</button>
                                 </>
                             ) : null
                     }
@@ -89,6 +95,11 @@ const CourseDetail = () => {
                 </form>
 
             </div>
+            <DeleteCourseModal 
+            isOpen={openModal}
+            onSubmit={handleDelete}
+            onClose={handleCloseModal}
+            />
         </div>
     )
 }

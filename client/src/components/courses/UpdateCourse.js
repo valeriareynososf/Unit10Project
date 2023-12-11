@@ -1,51 +1,75 @@
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { api } from '../utils/apiHelper';
-import UserContext from '../context/UserContext';
-import Errors from './Errors';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const CreateCourse = () => {
+import { useEffect, useContext, useState } from 'react';
+import { api } from "../../utils/apiHelper.js";
+import UserContext from '../../context/UserContext.js';
+import Errors from '../errors/Errors.js';
+
+const UpdateCourse = () => {
+    const { id } = useParams()
     const navigate = useNavigate()
-    const { authUser } = useContext(UserContext);
-    const { password } = authUser;
-    const [errors, setErrors] = useState([]);
-    const [course, setCourse] = useState({
-        userId: authUser.id,
-        title: '',
-        description: '',
-        estimatedTime: '',
-        materialsNeeded: ''
-    })
+
+    const { authUser } = useContext(UserContext)
+
+    const [course, setCourse] = useState({})
+    const [errors, setErrors] = useState([])
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await api(`/courses`, "POST", course, { ...authUser, password: password });
-
-        if (data.status === 201) {
-            navigate(`/`)
+        const data = await api(`/courses/${id}`, "PUT", course, authUser);
+        if (data.status === 204) {
+            navigate(`/courses/${id}`)
         } else if (data.status === 400) {
             const res = await data.json();
-            // console.log("res", res)
-            if (res.errors) {
-                setErrors(res.errors)
-            }
+            setErrors(res.errors)
+        } else if (data.status === 404) {
+            navigate("/notfound")
         } else if (data.status === 500) {
             navigate("/error")
         } else {
             throw new Error()
         }
-
+        e.target.reset()
     }
+
+
+    useEffect(() => {
+
+        const getCourses = async () => {
+            const data = await api(`/courses/${id}`, "GET", null);
+            if (data.status === 200) {
+                const course = await data.json()
+
+                //navigate to forbidden if authenticated user's ID doesn't match that of the user who owns the course
+
+                if (authUser?.id !== course?.User?.id) {
+                    navigate("/forbidden")
+                } else {
+                    setCourse(course);
+                }
+            } else if (data.status === 404) {
+                navigate("/notfound")
+            } else if (data.status === 500) {
+                navigate("/error")
+            }
+        }
+
+        getCourses()
+            .catch(console.error);
+
+    }, [id, navigate, authUser?.id])
 
 
     const handleCancel = (event) => {
         event.preventDefault();
-        navigate("/");
+        navigate(`/courses/${course.id}`);
     }
+
 
     return (
         <div className="wrap">
-            <h2>Create Course</h2>
+            <h2>Update Course</h2>
             {/* screens display validation errors returned from the REST API */}
             <Errors errors={errors} />
             <form onSubmit={handleSubmit}>
@@ -60,7 +84,7 @@ const CreateCourse = () => {
                             onChange={e => setCourse({ ...course, title: e.target.value })}
                         />
 
-                        <p>by {authUser?.firstName} {authUser?.lastName}</p>
+                        <p>By {course.User?.firstName} {course.User?.lastName}</p>
 
                         <label htmlFor="courseDescription">Course Description</label>
                         <textarea
@@ -90,11 +114,11 @@ const CreateCourse = () => {
                     </div>
                 </div>
                 <button className="button" type="submit">
-                    Create Course
+                    Update Course
                 </button>
-                <button
-                    className="button button-secondary"
-                    onClick={handleCancel}>
+                <button className="button button-secondary"
+                    onClick={handleCancel}
+                >
                     Cancel
                 </button>
             </form>
@@ -102,4 +126,4 @@ const CreateCourse = () => {
     )
 }
 
-export default CreateCourse;
+export default UpdateCourse;

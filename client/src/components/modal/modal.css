@@ -1,0 +1,16 @@
+.modal {
+    max-width: 40rem;
+    max-height: 60rem;
+    /* min-height: 250px; */
+    padding: 2rem;
+    border: 0;
+    border-radius: .5rem;
+}
+
+.modal::backdrop {
+    background:  hsl(0 0% 0% / 50%);
+}
+
+.modal-buttons {
+    margin-top: 40px;
+}

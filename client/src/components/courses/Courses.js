@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
-import { api } from "../utils/apiHelper.js";
+import { api } from "../../utils/apiHelper.js";
 
 const Courses = () => {
     const navigate = useNavigate();

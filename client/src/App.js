@@ -1,18 +1,18 @@
 import React from 'react';
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import Courses from '../src/components/Courses'
-import Header from './components/Header';
-import CreateCourse from './components/CreateCourse';
-import CourseDetail from './components/CourseDetail';
-import UpdateCourse from './components/UpdateCourse';
-import UserSignIn from './components/UserSignIn';
-import UserSignUp from './components/UserSignUp';
-import UserSignOut from './components/UserSignOut';
-import NotFound from './components/NotFound';
-import Forbidden from './components/Forbidden';
-import PrivateRoute from './components/PrivateRoute';
-import UnhandledError from './components/UnhandledError';
+import Courses from './components/courses/Courses'
+import Header from './components/nav/Header';
+import CreateCourse from './components/courses/CreateCourse';
+import CourseDetail from './components/courses/CourseDetail';
+import UpdateCourse from './components/courses/UpdateCourse';
+import UserSignIn from './components/users/UserSignIn';
+import UserSignUp from './components/users/UserSignUp';
+import UserSignOut from './components/users/UserSignOut';
+import NotFound from './components/errors/NotFound';
+import Forbidden from './components/errors/Forbidden';
+import PrivateRoute from './components/errors/PrivateRoute';
+import UnhandledError from './components/errors/UnhandledError';
 
 import '../src/styles/global.css'
 
