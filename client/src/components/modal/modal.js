@@ -38,7 +38,7 @@ const Modal = ({ isOpen, onSubmit, onClose, text, children }) => {
         modalEl.close();
       }
     }
-  }, [isModalOpen]);
+  }, [isModalOpen, modalEl]);
 
   return (
     <dialog className="modal" ref={modalRef} onClick={handleOutsideClick}>
