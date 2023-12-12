@@ -7,6 +7,7 @@ const UserContext = createContext(null);
 export const UserProvider = (props) => {
   const cookie = Cookies.get("authenticatedUser");
   const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
+  const [credentials, setCredentials] = useState('');
 
   const signIn = async (credentials) => {
     const res = await api("/users", "GET", null, credentials);
@@ -14,7 +15,8 @@ export const UserProvider = (props) => {
     if (res.status === 200) {
       const user = await res.json()
       // console.log("User:", user)
-      user.password = credentials.password
+      setCredentials(credentials)
+      // user.password = credentials.password
       setAuthUser(user);
       //persists user credentials
       Cookies.set("authenticatedUser", JSON.stringify(user), { expires: 1 });
@@ -34,6 +36,7 @@ export const UserProvider = (props) => {
   return (
     <UserContext.Provider value={{
       authUser,
+      credentials,
       actions: {
         signIn,
         signOut

@@ -17,6 +17,7 @@ export const api = (
     }
 
     if (credentials) {
+        console.log("credentials", credentials)
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
         options.headers.Authorization = `Basic ${encodedCredentials}`;
     }

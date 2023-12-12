@@ -6,8 +6,7 @@ import Errors from '../errors/Errors';
 
 const CreateCourse = () => {
     const navigate = useNavigate()
-    const { authUser } = useContext(UserContext);
-    const { password } = authUser;
+    const { authUser, credentials } = useContext(UserContext);
     const [errors, setErrors] = useState([]);
     const [course, setCourse] = useState({
         userId: authUser.id,
@@ -19,7 +18,8 @@ const CreateCourse = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await api(`/courses`, "POST", course, { ...authUser, password: password });
+        console.log("credentials", credentials)
+        const data = await api(`/courses`, "POST", course, { ...authUser, ...credentials });
 
         if (data.status === 201) {
             navigate(`/`)
