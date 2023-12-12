@@ -6,10 +6,10 @@ const DeleteCourseModal = ({isOpen, onSubmit, onClose}) => {
   isOpen={isOpen}
   onSubmit={onSubmit}
   onClose={onClose}
-  text="Delete"
+  action="Delete"
   >
     <div>
-        Are you sure you want to delete this?
+        Are you sure you want to delete this course?
     </div>
   </Modal>
   );

@@ -19,20 +19,25 @@ const CreateCourse = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await api(`/courses`, "POST", course, { ...authUser, password: password });
+        try {
+            const data = await api(`/courses`, "POST", course, { ...authUser, password: password });
+            
+            if (data.status === 201) {
+                const res = await data.json();
+                navigate(`/courses/${res.id}`);
+            } else if (data.status === 400) {
+                const res = await data.json();
+                // console.log("res", res)
+                if (res.errors) {
+                    setErrors(res.errors)
+                }
+            } else if (data.status === 401) {
+                navigate("/forbidden")
+            } 
 
-        if (data.status === 201) {
-            navigate(`/`)
-        } else if (data.status === 400) {
-            const res = await data.json();
-            // console.log("res", res)
-            if (res.errors) {
-                setErrors(res.errors)
-            }
-        } else if (data.status === 500) {
+        } catch (error) {
+            console.log("error", error)
             navigate("/error")
-        } else {
-            throw new Error()
         }
 
     }

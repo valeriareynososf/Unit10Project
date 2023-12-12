@@ -67,6 +67,10 @@ header nav a:hover {
     color: #1D8543;
     font-weight: 600;
 }
+.course--username {
+    color: black;
+    font-weight: 600;
+}
 
 .course--module {
     background: #FFFFFF;
@@ -222,9 +226,8 @@ textarea {
     border-radius: .5rem;
     cursor: pointer;
 }
-input:focus, button:focus, .button:focus, textarea:focus {
+input:focus, textarea:focus {
     border: none;
-    border-radius: 0;
     outline: 2px solid #332a40;
 }
 

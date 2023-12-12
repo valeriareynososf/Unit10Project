@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import "./modal.css";
 
-const Modal = ({ isOpen, onSubmit, onClose, text, children }) => {
+const Modal = ({ isOpen, onSubmit, onClose, action, children }) => {
   const [isModalOpen, setModalOpen] = useState(isOpen);
   const modalRef = useRef(null);
   const modalEl = modalRef.current;
@@ -15,12 +15,11 @@ const Modal = ({ isOpen, onSubmit, onClose, text, children }) => {
 
   const handleOutsideClick = (e) => {
     const dimensions = modalEl?.getBoundingClientRect();
-
     if (
       e.clientX < dimensions.left ||
-      e.clientX < dimensions.right ||
+      e.clientX > dimensions.right ||
       e.clientY < dimensions.top ||
-      e.clientY < dimensions.bottom
+      e.clientY > dimensions.bottom
     ) {
       handleCloseModal();
     }
@@ -48,7 +47,7 @@ const Modal = ({ isOpen, onSubmit, onClose, text, children }) => {
           Cancel
         </button>
         <button className="button button-secondary" onClick={onSubmit}>
-          {text}
+          {action}
         </button>
       </div>
     </dialog>

@@ -52,7 +52,7 @@ const handleCloseModal = () => {
             .catch(console.error);
 
     }, [id, navigate])
-console.log("openModal", openModal)
+
     return (
         <div>
             <div className="actions--bar">
@@ -77,7 +77,7 @@ console.log("openModal", openModal)
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
-                            <p>By {course.User?.firstName} {course.User?.lastName}</p>
+                            <p>By <span className="course--username">{course.User?.firstName} {course.User?.lastName}</span></p>
                             <ReactMarkdown children={course.description} />
                             <p>{course.description}</p>
 
