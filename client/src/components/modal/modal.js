@@ -3,6 +3,8 @@ import "./modal.css";
 
 const Modal = ({ isOpen, onSubmit, onClose, action, children }) => {
   const [isModalOpen, setModalOpen] = useState(isOpen);
+
+  //use a ref attribute to access directly in DOM
   const modalRef = useRef(null);
   const modalEl = modalRef.current;
 
@@ -13,8 +15,16 @@ const Modal = ({ isOpen, onSubmit, onClose, action, children }) => {
     setModalOpen(false);
   };
 
+  //if user exits using key, set state to false
+  const handleKeyDown = (e) => {
+    if (e.key === "Escape") {
+      handleCloseModal();
+    }
+  };
+
   const handleOutsideClick = (e) => {
     const dimensions = modalEl?.getBoundingClientRect();
+    //modal closes if user clicks outside of modal
     if (
       e.clientX < dimensions.left ||
       e.clientX > dimensions.right ||
@@ -40,7 +50,12 @@ const Modal = ({ isOpen, onSubmit, onClose, action, children }) => {
   }, [isModalOpen, modalEl]);
 
   return (
-    <dialog className="modal" ref={modalRef} onClick={handleOutsideClick}>
+    <dialog
+      className="modal"
+      ref={modalRef}
+      onClick={handleOutsideClick}
+      onKeyDown={handleKeyDown}
+    >
       {children}
       <div className="modal-buttons">
         <button className="button" onClick={handleCloseModal}>
